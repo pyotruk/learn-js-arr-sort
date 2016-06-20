@@ -1,59 +1,22 @@
-var findMin = function(arr){
-	var min = Number.MAX_SAFE_INTEGER;
-	for(var i = 0; i < arr.length; i++){
-		if(arr[i] < min){
-			min = arr[i];
-		};
-	}; 
-	return min;
-};
 
-var removeItem = function(arr, itemToRemove){
-	var index = arr.indexOf(itemToRemove);
-	if (index > -1){
-		arr.splice(index,1);
-	};
-};
+var sizes = [100, 500, 1000, 5000, 1e+4, 2.5e+4, 5e+4];
 
-var simpleSort = function(arr){
-	var sortedArr = [];
+for(var i in sizes) {
 
-	while(arr.length > 0){
-		var min = findMin(arr);
-		sortedArr.push(min);
-		removeItem(arr, min);
- 	};
- 	return sortedArr;
-};
+	var size = sizes[i];
+	var arr = generateArray(size);
 
-var bubbleSort = function (arr){
-	for (var i = 0; i < arr.length; i++){
+	var t0 = new Date();
 
-		for (var j = 0; j < arr.length; j++){
+	var sortedArr = bubbleSort(arr);
 
-			if (arr[i] > arr[j]){
-				var buff = arr[i];
-				arr[i] = arr[j];
-				arr[j] = buff;
-			}
-		};
-	};
-	return arr;
-};
+	var diff = new Date() - t0;
+	console.log('BubbleSort: size = ' + size + ', time = ' + diff + ' msec.');
 
+	t0 = new Date();
 
-var arr = [5,4,2,1,3];
+	sortedArr = simpleSort(arr);
 
-var t0 = new Date();
-
-var sortedArr = bubbleSort(arr);
-
-var diff = new Date() - t0;
-console.log('BubbleSort executed for ' + diff + ' msec.');
-
-t0 = new Date();
-
-sortedArr = simpleSort(arr);
-
-diff = new Date() - t0;
-console.log('SimpleSort executed for ' + diff + ' msec.');
+	diff = new Date() - t0;
+	console.log('SimpleSort: size = ' + size + ', time = ' + diff + ' msec.');
+}
